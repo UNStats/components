@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Select } from 'rebass';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Select } from "rebass";
 
 /**
  * This component encapsulates
@@ -19,19 +19,19 @@ class Dropdown extends Component {
     options: PropTypes.arrayOf(
       PropTypes.shape({
         key: PropTypes.string,
-        value: PropTypes.string,
+        value: PropTypes.string
       })
     ).isRequired,
     /** Display placeholder if no or invalid option is selected. */
     placeholder: PropTypes.string,
     /** Callback when selection changes. */
-    onChange: PropTypes.func.isRequired,
+    onChange: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    value: '',
+    value: "",
     disabled: false,
-    placeholder: 'Select...',
+    placeholder: "Select..."
   };
 
   constructor(props) {

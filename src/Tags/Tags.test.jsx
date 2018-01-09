@@ -1,25 +1,25 @@
-import React from 'react';
-import { mount } from 'enzyme';
-import Tags from './Tags';
+import React from "react";
+import { mount } from "enzyme";
+import Tags from "./Tags";
 
-describe('Tags', () => {
+describe("Tags", () => {
   let props;
 
   beforeEach(() => {
     props = {
       tags: [
-        { key: 'red', value: 'Red' },
-        { key: 'green', value: 'Green' },
-        { key: 'blue', value: 'Blue' },
-        { key: 'yellow', value: 'Yellow' },
-        { key: 'orange', value: 'Orange' },
+        { key: "red", value: "Red" },
+        { key: "green", value: "Green" },
+        { key: "blue", value: "Blue" },
+        { key: "yellow", value: "Yellow" },
+        { key: "orange", value: "Orange" }
       ],
-      onClick: jest.fn(),
+      onClick: jest.fn()
     };
   });
 
-  test('non-empty tags', () => {
-    const wrapper = mount(<Tags {...props} />).find('button');
+  test("non-empty tags", () => {
+    const wrapper = mount(<Tags {...props} />).find("button");
     expect(wrapper.length).toEqual(5);
     expect(
       wrapper.containsAllMatchingElements([
@@ -27,22 +27,22 @@ describe('Tags', () => {
         <button value="green">Green</button>,
         <button value="blue">Blue</button>,
         <button value="yellow">Yellow</button>,
-        <button value="orange">Orange</button>,
+        <button value="orange">Orange</button>
       ])
     ).toEqual(true);
   });
 
-  test('empty tags', () => {
+  test("empty tags", () => {
     props.tags = [];
-    const wrapper = mount(<Tags {...props} />).find('button');
+    const wrapper = mount(<Tags {...props} />).find("button");
     expect(wrapper.length).toEqual(0);
   });
 
-  test('clicking on tag fires onClick callback', () => {
+  test("clicking on tag fires onClick callback", () => {
     mount(<Tags {...props} />)
       .find('button[value="blue"]')
-      .simulate('click');
+      .simulate("click");
     expect(props.onClick).toHaveBeenCalledTimes(1);
-    expect(props.onClick).toHaveBeenCalledWith('blue');
+    expect(props.onClick).toHaveBeenCalledWith("blue");
   });
 });

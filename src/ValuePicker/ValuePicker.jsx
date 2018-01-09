@@ -1,8 +1,8 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { Box, Flex, Panel, PanelHeader } from 'rebass';
-import Dropdown from '../Dropdown';
-import Tags from '../Tags/Tags';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { Box, Flex, Panel, PanelHeader } from "rebass";
+import Dropdown from "../Dropdown";
+import Tags from "../Tags/Tags";
 
 /**
  * This component allows managing a selection of values. Values from the
@@ -18,20 +18,20 @@ class ValuePicker extends Component {
     selectable: PropTypes.arrayOf(
       PropTypes.shape({
         key: PropTypes.string,
-        value: PropTypes.string,
+        value: PropTypes.string
       })
     ).isRequired,
     /** Selected values (can be empty array). */
     selected: PropTypes.arrayOf(
       PropTypes.shape({
         key: PropTypes.string,
-        value: PropTypes.string,
+        value: PropTypes.string
       })
     ).isRequired,
     /** Callback fires when selecting a value in dropdown. */
     onAddValue: PropTypes.func.isRequired,
     /** Callback fires when clicking on a selected value. */
-    onRemoveValue: PropTypes.func.isRequired,
+    onRemoveValue: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -52,8 +52,8 @@ class ValuePicker extends Component {
     return (
       <Panel>
         <PanelHeader>{this.props.title}</PanelHeader>
-        <Flex align={['stretch', 'center']} direction={['column', 'row']}>
-          <Box p={[2, 3]} flex={['none', '1 4rem']}>
+        <Flex align={["stretch", "center"]} direction={["column", "row"]}>
+          <Box p={[2, 3]} flex={["none", "1 4rem"]}>
             <Dropdown
               options={this.props.selectable}
               onChange={this.handleAddValue}

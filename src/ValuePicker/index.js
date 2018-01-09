@@ -1,1 +1,1 @@
-export { default } from './ValuePicker';
+export { default } from "./ValuePicker";

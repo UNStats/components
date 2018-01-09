@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { ButtonCircle, Flex, Box } from 'rebass';
+import React, { Component } from "react";
+import PropTypes from "prop-types";
+import { ButtonCircle, Flex, Box } from "rebass";
 
 /**
  * This component renders an array of tags. It does not maintain state. Use
@@ -12,11 +12,11 @@ class Tags extends Component {
     tags: PropTypes.arrayOf(
       PropTypes.shape({
         key: PropTypes.string,
-        value: PropTypes.string,
+        value: PropTypes.string
       })
     ).isRequired,
     /** Callback with tag's `key` as payload is fired when a tag is clicked. */
-    onClick: PropTypes.func.isRequired,
+    onClick: PropTypes.func.isRequired
   };
 
   constructor(props) {
