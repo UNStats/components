@@ -1,10 +1,10 @@
 # @unstats/components
 
-This library contains  [React](https://facebook.github.io/react/) components that can be reused across web applications. None of these components manage state. State is managed in each web application.
+This library contains [React](https://facebook.github.io/react/) components that can be reused across web applications. None of these components manage state. State is managed in each web application.
 
 ## Explore
 
-You can explore all components by launching the style guide: 
+You can explore all components by launching the style guide:
 
     yarn run styleguide
 
@@ -25,11 +25,7 @@ runs `src/Dropdown/Dropdown.test.jsx`. In order to run only specific tests withi
 
 ## Debugging
 
-There are two things you might want to debug: components displayed in the style guide and tests. For each scenario you need to be able to place `debugger` statements in your code. 
-
-When using Atom with
-[linter-eslint](https://atom.io/packages/linter-eslint) and setting **Fix errors on save** active, `debugger` statements are removed from your file the moment you save it (based on the
-[no-debugger rule](http://eslint.org/docs/rules/no-debugger)). In order to prevent this behavior, you need to add `no-debugger` to **Disable specific rules from fixes** in settings of `linter-eslint`.
+There are two things you might want to debug: components displayed in the style guide and tests. For each scenario you need to be able to place `debugger` statements in your code.
 
 ### Debugging Components
 
@@ -40,6 +36,6 @@ Debugging components is the same as debugging any other JavaScript code running 
 
 Tests do not run outside the browser with Node. After placing `debugger` statement in a test file, run
 
-    yarn run debug <test-file>
+    yarn run test:debug <test-file>
 
 to start a debugging session. Then launch `chrome://inspect` in Chrome and click on **inspect**. Chrome debugger pauses program execution at the first line. Click on **Resume script execution** to pause program execution on your first `debugger` statement.

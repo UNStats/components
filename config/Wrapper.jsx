@@ -1,6 +1,6 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Box, Provider } from 'rebass';
+import React from "react";
+import PropTypes from "prop-types";
+import { Box, Provider } from "rebass";
 
 const Wrapper = ({ children }) => (
   <Provider>
@@ -9,7 +9,7 @@ const Wrapper = ({ children }) => (
 );
 
 Wrapper.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired
 };
 
 export default Wrapper;

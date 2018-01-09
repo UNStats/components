@@ -3,21 +3,24 @@
   "name": "@unstats/components",
   "version": "0.1.0",
   "description": "UNStats React Components",
-  "homepage":
-    "https://github.com/UNStats/webapps/tree/master/packages/components",
-  "bugs": "https://github.com/UNStats/webapps/issues",
+  "homepage": "https://github.com/UNStats/components",
+  "bugs": "https://github.com/UNStats/components/issues",
   "author": {
     "name": "Thilo Maier",
     "email": "maier@un.org"
   },
+  "lint-staged": {
+    "*.{js,jsx,json,css,md}": ["prettier --write", "git add"]
+  },
   "scripts": {
-    "debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand",
-    "format": "eslint . --ext .js,.jsx --fix",
-    "lint": "eslint . --ext .js,.jsx",
+    "precommit": "lint-staged",
+    "format": "prettier --write \"src/**/*.{js,jsx,md}\"",
+    "lint": "eslint src/**/*.{js,jsx}",
     "styleguide": "styleguidist server",
     "styleguide:build": "styleguidist build",
     "test": "jest",
-    "test:coverage": "jest --coverage"
+    "test:coverage": "jest --coverage",
+    "test:debug": "node --inspect-brk ./node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
     "prop-types": "^15.5.10",
@@ -28,29 +31,45 @@
     "react": "^16.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
-    "babel-eslint": "^8.0.0",
+    "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.2",
     "babel-plugin-styled-components": "^1.4.0",
-    "babel-preset-env": "^1.6.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-react-app": "^3.1.0",
+    "babel-runtime": "^6.23.0",
     "enzyme": "^3.1.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^4.6.1",
-    "eslint-config-airbnb": "^16.1.0",
-    "eslint-config-prettier": "^2.4.0",
-    "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^6.0.3",
-    "eslint-plugin-prettier": "^2.2.0",
-    "eslint-plugin-react": "^7.3.0",
+    "eslint-config-react-app": "^2.0.1",
+    "eslint-plugin-flowtype": "^2.34.1",
+    "eslint-plugin-import": "^2.6.0",
+    "eslint-plugin-jsx-a11y": "^5.1.1",
+    "eslint-plugin-react": "^7.1.0",
+    "husky": "^0.14.3",
     "jest": "^22.0.4",
     "jsdom": "^11.5.1",
-    "prettier": "^1.6.1",
+    "lint-staged": "^6.0.0",
+    "prettier": "^1.9.2",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
     "react-styleguidist": "^6.1.0",
     "react-test-renderer": "^16.2.0",
     "webpack": "^3.10.0"
+  },
+  "jest": {
+    "collectCoverageFrom": ["src/**/[A-Z]*.{js,jsx,mjs}"],
+    "setupFiles": ["<rootDir>/config/enzyme.js", "<rootDir>/config/jsdom.js"],
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.{js,jsx,mjs}",
+      "<rootDir>/src/**/?(*.)(spec|test).{js,jsx,mjs}"
+    ]
+  },
+  "babel": {
+    "presets": ["react-app"],
+    "plugins": ["styled-components"]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   }
 }
