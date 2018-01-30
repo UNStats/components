@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "@unstats/components",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "UNStats React Components",
   "homepage": "https://github.com/UNStats/components",
   "bugs": "https://github.com/UNStats/components/issues",
