@@ -3,10 +3,8 @@ import { mount } from "enzyme";
 import ValuePicker from "./ValuePicker";
 
 describe("ValuePicker", () => {
-  let props;
-
-  beforeEach(() => {
-    props = {
+  test("non-empty selectable and non-empty selected", () => {
+    const props = {
       title: "Age",
       selectable: [
         { key: "red", value: "Red" },
@@ -20,9 +18,6 @@ describe("ValuePicker", () => {
       onAddValue: jest.fn(),
       onRemoveValue: jest.fn()
     };
-  });
-
-  test("non-empty selectable values and non-empty selected values", () => {
     const wrapper = mount(<ValuePicker {...props} />);
     const select = wrapper.find("select");
     expect(select.length).toEqual(1);
@@ -47,8 +42,41 @@ describe("ValuePicker", () => {
     ).toEqual(true);
   });
 
-  test("non-empty selectable values and empty selected values", () => {
-    props.selected = [];
+  test("non-empty selectable and selected but disabled", () => {
+    const props = {
+      disabled: true,
+      title: "Age",
+      selectable: [
+        { key: "red", value: "Red" },
+        { key: "yellow", value: "Yellow" }
+      ],
+      selected: [
+        { key: "blue", value: "Blue" },
+        { key: "green", value: "Green" },
+        { key: "black", value: "Black" }
+      ],
+      onAddValue: jest.fn(),
+      onRemoveValue: jest.fn()
+    };
+    const wrapper = mount(<ValuePicker {...props} />);
+    // Verify that disabled flags have been set.
+    const dropdown = wrapper.find("Dropdown");
+    expect(dropdown.props().disabled).toEqual(true);
+    const tags = wrapper.find("Tags");
+    expect(tags.props().disabled).toEqual(true);
+  });
+
+  test("non-empty selectable and empty selected", () => {
+    const props = {
+      title: "Age",
+      selectable: [
+        { key: "red", value: "Red" },
+        { key: "yellow", value: "Yellow" }
+      ],
+      selected: [],
+      onAddValue: jest.fn(),
+      onRemoveValue: jest.fn()
+    };
     const wrapper = mount(<ValuePicker {...props} />);
     const select = wrapper.find("select");
     expect(select.children().length).toEqual(3);
@@ -65,8 +93,18 @@ describe("ValuePicker", () => {
     expect(buttons.length).toEqual(0);
   });
 
-  test("empty selectable values and non-empty selected values", () => {
-    props.selectable = [];
+  test("empty selectable and non-empty selected", () => {
+    const props = {
+      title: "Age",
+      selectable: [],
+      selected: [
+        { key: "blue", value: "Blue" },
+        { key: "green", value: "Green" },
+        { key: "black", value: "Black" }
+      ],
+      onAddValue: jest.fn(),
+      onRemoveValue: jest.fn()
+    };
     const wrapper = mount(<ValuePicker {...props} />);
     const select = wrapper.find("select");
     expect(select.children().length).toEqual(1);
@@ -90,7 +128,21 @@ describe("ValuePicker", () => {
     ).toEqual(true);
   });
 
-  test("selecting value from selectable fires onAddValue callback", () => {
+  test("selecting value from selectable fires onAddValue", () => {
+    const props = {
+      title: "Age",
+      selectable: [
+        { key: "red", value: "Red" },
+        { key: "yellow", value: "Yellow" }
+      ],
+      selected: [
+        { key: "blue", value: "Blue" },
+        { key: "green", value: "Green" },
+        { key: "black", value: "Black" }
+      ],
+      onAddValue: jest.fn(),
+      onRemoveValue: jest.fn()
+    };
     mount(<ValuePicker {...props} />)
       .find("select")
       .simulate("change", { target: { value: "red" } });
@@ -98,7 +150,21 @@ describe("ValuePicker", () => {
     expect(props.onAddValue).toHaveBeenCalledWith("red");
   });
 
-  test("clicking on button from selected values fires onRemoveValue callback", () => {
+  test("clicking button from selected fires onRemoveValue", () => {
+    const props = {
+      title: "Age",
+      selectable: [
+        { key: "red", value: "Red" },
+        { key: "yellow", value: "Yellow" }
+      ],
+      selected: [
+        { key: "blue", value: "Blue" },
+        { key: "green", value: "Green" },
+        { key: "black", value: "Black" }
+      ],
+      onAddValue: jest.fn(),
+      onRemoveValue: jest.fn()
+    };
     mount(<ValuePicker {...props} />)
       .find('button[value="blue"]')
       .simulate("click");

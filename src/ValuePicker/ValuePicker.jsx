@@ -14,6 +14,8 @@ class ValuePicker extends Component {
   static propTypes = {
     /** Component title. */
     title: PropTypes.string.isRequired,
+    /** Enable or disable component. */
+    disabled: PropTypes.bool,
     /** Selectable values (can be empty array). */
     selectable: PropTypes.arrayOf(
       PropTypes.shape({
@@ -34,6 +36,10 @@ class ValuePicker extends Component {
     onRemoveValue: PropTypes.func.isRequired
   };
 
+  static defaultProps = {
+    disabled: false
+  };
+
   constructor(props) {
     super(props);
     this.handleAddValue = this.handleAddValue.bind(this);
@@ -49,19 +55,25 @@ class ValuePicker extends Component {
   }
 
   render() {
+    const { title, disabled, selectable, selected } = this.props;
     return (
       <Panel>
-        <PanelHeader>{this.props.title}</PanelHeader>
+        <PanelHeader>{title}</PanelHeader>
         <Flex align={["stretch", "center"]} direction={["column", "row"]}>
           <Box p={[2, 3]} flex={["none", "1 4rem"]}>
             <Dropdown
-              options={this.props.selectable}
+              disabled={disabled}
+              options={selectable}
               onChange={this.handleAddValue}
               placeholder="Add value..."
             />
           </Box>
           <Box p={[1, 2]} flex={3}>
-            <Tags tags={this.props.selected} onClick={this.handleRemoveValue} />
+            <Tags
+              disabled={disabled}
+              tags={selected}
+              onClick={this.handleRemoveValue}
+            />
           </Box>
         </Flex>
       </Panel>
