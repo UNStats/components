@@ -1,4 +1,4 @@
-Dropdown with selected value corresponding to option key in options:
+Selected value corresponds to option key:
 
 ```jsx
 <Dropdown
@@ -12,7 +12,7 @@ Dropdown with selected value corresponding to option key in options:
 />
 ```
 
-Dropdown with selected value not corresponding to option key in options:
+Selected value does not correspond to option key:
 
 ```jsx
 <Dropdown
@@ -26,7 +26,7 @@ Dropdown with selected value not corresponding to option key in options:
 />
 ```
 
-Dropdown without selected value:
+No selected value:
 
 ```jsx
 <Dropdown
@@ -39,7 +39,7 @@ Dropdown without selected value:
 />
 ```
 
-Dropdown with empty options:
+Empty options:
 
 ```jsx
 <Dropdown
@@ -48,7 +48,7 @@ Dropdown with empty options:
 />
 ```
 
-Dropdown with custom placeholder:
+Custom placeholder:
 
 ```jsx
 <Dropdown
@@ -60,5 +60,20 @@ Dropdown with custom placeholder:
   value="black"
   placeholder="Make your selection..."
   onChange={payload => console.log(`onChange: ${payload}`)}
+/>
+```
+
+Disabled:
+
+```jsx
+<Dropdown
+  options={[
+    { key: "red", value: "Red" },
+    { key: "green", value: "Green" },
+    { key: "blue", value: "Blue" }
+  ]}
+  value="blue"
+  onChange={payload => console.log(`onChange: ${payload}`)}
+  disabled
 />
 ```

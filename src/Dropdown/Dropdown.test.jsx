@@ -3,11 +3,9 @@ import { mount } from "enzyme";
 import Dropdown from "./Dropdown";
 
 describe("Dropdown", () => {
-  let props;
-
-  beforeEach(() => {
-    // Reset props before each test.
-    props = {
+  test("valid value", () => {
+    const props = {
+      value: "blue",
       options: [
         { key: "red", value: "Red" },
         { key: "green", value: "Green" },
@@ -15,13 +13,6 @@ describe("Dropdown", () => {
       ],
       onChange: jest.fn()
     };
-  });
-
-  // Components styled with styled-components tend to be deeply nested several.
-  // Shallow renderer is not suitable, use mount instead.
-
-  test("render with valid value prop", () => {
-    props.value = "blue";
     const select = mount(<Dropdown {...props} />).find("select");
     const { value, disabled } = select.props();
     expect({ value, disabled }).toEqual({ value: "blue", disabled: false });
@@ -35,8 +26,32 @@ describe("Dropdown", () => {
     ).toEqual(true);
   });
 
-  test("render with invalid value prop", () => {
-    props.value = "black";
+  test("valid value but disabled", () => {
+    const props = {
+      value: "blue",
+      options: [
+        { key: "red", value: "Red" },
+        { key: "green", value: "Green" },
+        { key: "blue", value: "Blue" }
+      ],
+      onChange: jest.fn(),
+      disabled: true
+    };
+    const select = mount(<Dropdown {...props} />).find("select");
+    const { disabled } = select.props();
+    expect(disabled).toEqual(true);
+  });
+
+  test("invalid value", () => {
+    const props = {
+      value: "black",
+      options: [
+        { key: "red", value: "Red" },
+        { key: "green", value: "Green" },
+        { key: "blue", value: "Blue" }
+      ],
+      onChange: jest.fn()
+    };
     const select = mount(<Dropdown {...props} />).find("select");
     const { value, disabled } = select.props();
     expect({ value, disabled }).toEqual({ value: "black", disabled: false });
@@ -53,7 +68,15 @@ describe("Dropdown", () => {
     ).toEqual(true);
   });
 
-  test("render with no value prop", () => {
+  test("no value", () => {
+    const props = {
+      options: [
+        { key: "red", value: "Red" },
+        { key: "green", value: "Green" },
+        { key: "blue", value: "Blue" }
+      ],
+      onChange: jest.fn()
+    };
     const select = mount(<Dropdown {...props} />).find("select");
     const { value, disabled } = select.props();
     expect({ value, disabled }).toEqual({ value: "", disabled: false });
@@ -72,8 +95,15 @@ describe("Dropdown", () => {
 
   test("changing selected option triggers onChange callback", () => {
     const onChange = jest.fn();
-    props.onChange = onChange;
-    props.value = "blue";
+    const props = {
+      value: "blue",
+      options: [
+        { key: "red", value: "Red" },
+        { key: "green", value: "Green" },
+        { key: "blue", value: "Blue" }
+      ],
+      onChange
+    };
     const select = mount(<Dropdown {...props} />).find("select");
     select.simulate("change", {
       target: { value: "green" }
@@ -83,7 +113,15 @@ describe("Dropdown", () => {
   });
 
   test("custom placeholder", () => {
-    props.placeholder = "Make your selection...";
+    const props = {
+      options: [
+        { key: "red", value: "Red" },
+        { key: "green", value: "Green" },
+        { key: "blue", value: "Blue" }
+      ],
+      onChange: jest.fn(),
+      placeholder: "Make your selection..."
+    };
     const select = mount(<Dropdown {...props} />).find("select");
     expect(select.children().length).toEqual(4);
     const { disabled, hidden, value, children } = select.childAt(0).props();
@@ -96,7 +134,10 @@ describe("Dropdown", () => {
   });
 
   test("empty options", () => {
-    props.options = [];
+    const props = {
+      options: [],
+      onChange: jest.fn()
+    };
     const select = mount(<Dropdown {...props} />).find("select");
     const { value, disabled } = select.props();
     expect({ value, disabled }).toEqual({ value: "", disabled: true });

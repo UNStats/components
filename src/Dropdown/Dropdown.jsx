@@ -45,25 +45,19 @@ class Dropdown extends Component {
   }
 
   render() {
+    const { value, disabled, options, placeholder } = this.props;
     return (
       <Select
-        value={this.props.value}
-        disabled={this.props.disabled || this.props.options.length === 0}
+        value={value}
+        disabled={disabled || options.length === 0}
         onChange={this.handleChange}
       >
-        {this.props.options
-          .map(option => option.key)
-          .indexOf(this.props.value) < 0 && (
-          <option
-            value={this.props.value}
-            key={this.props.value}
-            disabled
-            hidden
-          >
-            {this.props.placeholder}
+        {options.map(option => option.key).indexOf(value) < 0 && (
+          <option value={value} key={value} disabled hidden>
+            {placeholder}
           </option>
         )}
-        {this.props.options.map(option => (
+        {options.map(option => (
           <option value={option.key} key={option.key}>
             {option.value}
           </option>
