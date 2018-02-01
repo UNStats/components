@@ -3,10 +3,8 @@ import { mount } from "enzyme";
 import Tags from "./Tags";
 
 describe("Tags", () => {
-  let props;
-
-  beforeEach(() => {
-    props = {
+  test("non-empty tags", () => {
+    const props = {
       tags: [
         { key: "red", value: "Red" },
         { key: "green", value: "Green" },
@@ -16,9 +14,6 @@ describe("Tags", () => {
       ],
       onClick: jest.fn()
     };
-  });
-
-  test("non-empty tags", () => {
     const wrapper = mount(<Tags {...props} />).find("button");
     expect(wrapper.length).toEqual(5);
     expect(
@@ -32,17 +27,66 @@ describe("Tags", () => {
     ).toEqual(true);
   });
 
-  test("empty tags", () => {
-    props.tags = [];
+  test("non-empty tags but disabled", () => {
+    const props = {
+      disabled: true,
+      tags: [
+        { key: "red", value: "Red" },
+        { key: "green", value: "Green" },
+        { key: "blue", value: "Blue" },
+        { key: "yellow", value: "Yellow" },
+        { key: "orange", value: "Orange" }
+      ],
+      onClick: jest.fn()
+    };
     const wrapper = mount(<Tags {...props} />).find("button");
-    expect(wrapper.length).toEqual(0);
+    expect(wrapper.length).toEqual(5);
+    expect(
+      wrapper.containsAllMatchingElements([
+        <button value="red" disabled>
+          Red
+        </button>,
+        <button value="green" disabled>
+          Green
+        </button>,
+        <button value="blue" disabled>
+          Blue
+        </button>,
+        <button value="yellow" disabled>
+          Yellow
+        </button>,
+        <button value="orange" disabled>
+          Orange
+        </button>
+      ])
+    ).toEqual(true);
   });
 
-  test("clicking on tag fires onClick callback", () => {
+  test("click on tag fires onClick callback", () => {
+    const props = {
+      tags: [
+        { key: "red", value: "Red" },
+        { key: "green", value: "Green" },
+        { key: "blue", value: "Blue" },
+        { key: "yellow", value: "Yellow" },
+        { key: "orange", value: "Orange" }
+      ],
+      onClick: jest.fn()
+    };
     mount(<Tags {...props} />)
       .find('button[value="blue"]')
       .simulate("click");
     expect(props.onClick).toHaveBeenCalledTimes(1);
     expect(props.onClick).toHaveBeenCalledWith("blue");
+  });
+
+  test("empty tags", () => {
+    const props = {
+      tags: [],
+      onClick: jest.fn()
+    };
+    props.tags = [];
+    const wrapper = mount(<Tags {...props} />).find("button");
+    expect(wrapper.length).toEqual(0);
   });
 });
