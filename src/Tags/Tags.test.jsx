@@ -1,92 +1,88 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render, Simulate } from "react-testing-library";
+import "dom-testing-library/extend-expect";
 import Tags from "./Tags";
 
 describe("Tags", () => {
   test("non-empty tags", () => {
-    const props = {
-      tags: [
-        { key: "red", value: "Red" },
-        { key: "green", value: "Green" },
-        { key: "blue", value: "Blue" },
-        { key: "yellow", value: "Yellow" },
-        { key: "orange", value: "Orange" }
-      ],
-      onClick: jest.fn()
-    };
-    const wrapper = mount(<Tags {...props} />).find("button");
-    expect(wrapper.length).toEqual(5);
-    expect(
-      wrapper.containsAllMatchingElements([
-        <button value="red">Red</button>,
-        <button value="green">Green</button>,
-        <button value="blue">Blue</button>,
-        <button value="yellow">Yellow</button>,
-        <button value="orange">Orange</button>
-      ])
-    ).toEqual(true);
+    const { container, getByText } = render(
+      <Tags
+        tags={[
+          { key: "red", value: "Red" },
+          { key: "green", value: "Green" },
+          { key: "blue", value: "Blue" },
+          { key: "yellow", value: "Yellow" },
+          { key: "orange", value: "Orange" }
+        ]}
+        onClick={jest.fn()}
+      />
+    );
+
+    expect(container.querySelectorAll("button").length).toEqual(5);
+
+    const redTag = getByText("Red");
+    expect(redTag).toBeInstanceOf(HTMLButtonElement);
+    expect(redTag).toHaveAttribute("value", "red");
+    expect(redTag).not.toHaveAttribute("disabled");
+
+    const greenTag = getByText("Green");
+    expect(greenTag).toBeInstanceOf(HTMLButtonElement);
+    expect(greenTag).toHaveAttribute("value", "green");
+    expect(greenTag).not.toHaveAttribute("disabled");
+
+    const blueTag = getByText("Blue");
+    expect(blueTag).toBeInstanceOf(HTMLButtonElement);
+    expect(blueTag).toHaveAttribute("value", "blue");
+    expect(blueTag).not.toHaveAttribute("disabled");
+
+    const yellowTag = getByText("Yellow");
+    expect(yellowTag).toBeInstanceOf(HTMLButtonElement);
+    expect(yellowTag).toHaveAttribute("value", "yellow");
+    expect(yellowTag).not.toHaveAttribute("disabled");
+
+    const orangeTag = getByText("Orange");
+    expect(orangeTag).toBeInstanceOf(HTMLButtonElement);
+    expect(orangeTag).toHaveAttribute("value", "orange");
+    expect(orangeTag).not.toHaveAttribute("disabled");
   });
 
-  test("non-empty tags but disabled", () => {
-    const props = {
-      disabled: true,
-      tags: [
-        { key: "red", value: "Red" },
-        { key: "green", value: "Green" },
-        { key: "blue", value: "Blue" },
-        { key: "yellow", value: "Yellow" },
-        { key: "orange", value: "Orange" }
-      ],
-      onClick: jest.fn()
-    };
-    const wrapper = mount(<Tags {...props} />).find("button");
-    expect(wrapper.length).toEqual(5);
-    expect(
-      wrapper.containsAllMatchingElements([
-        <button value="red" disabled>
-          Red
-        </button>,
-        <button value="green" disabled>
-          Green
-        </button>,
-        <button value="blue" disabled>
-          Blue
-        </button>,
-        <button value="yellow" disabled>
-          Yellow
-        </button>,
-        <button value="orange" disabled>
-          Orange
-        </button>
-      ])
-    ).toEqual(true);
+  test("disabled prop", () => {
+    const { getByText } = render(
+      <Tags
+        disabled
+        tags={[
+          { key: "red", value: "Red" },
+          { key: "green", value: "Green" },
+          { key: "blue", value: "Blue" },
+          { key: "yellow", value: "Yellow" },
+          { key: "orange", value: "Orange" }
+        ]}
+        onClick={jest.fn()}
+      />
+    );
+    expect(getByText("Red")).toHaveAttribute("disabled");
+    expect(getByText("Green")).toHaveAttribute("disabled");
+    expect(getByText("Blue")).toHaveAttribute("disabled");
+    expect(getByText("Yellow")).toHaveAttribute("disabled");
+    expect(getByText("Orange")).toHaveAttribute("disabled");
   });
 
   test("click on tag fires onClick callback", () => {
-    const props = {
-      tags: [
-        { key: "red", value: "Red" },
-        { key: "green", value: "Green" },
-        { key: "blue", value: "Blue" },
-        { key: "yellow", value: "Yellow" },
-        { key: "orange", value: "Orange" }
-      ],
-      onClick: jest.fn()
-    };
-    mount(<Tags {...props} />)
-      .find('button[value="blue"]')
-      .simulate("click");
-    expect(props.onClick).toHaveBeenCalledTimes(1);
-    expect(props.onClick).toHaveBeenCalledWith("blue");
-  });
-
-  test("empty tags", () => {
-    const props = {
-      tags: [],
-      onClick: jest.fn()
-    };
-    props.tags = [];
-    const wrapper = mount(<Tags {...props} />).find("button");
-    expect(wrapper.length).toEqual(0);
+    const onClick = jest.fn();
+    const { getByText } = render(
+      <Tags
+        tags={[
+          { key: "red", value: "Red" },
+          { key: "green", value: "Green" },
+          { key: "blue", value: "Blue" },
+          { key: "yellow", value: "Yellow" },
+          { key: "orange", value: "Orange" }
+        ]}
+        onClick={onClick}
+      />
+    );
+    Simulate.click(getByText("Blue"));
+    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(onClick).toHaveBeenCalledWith("blue");
   });
 });

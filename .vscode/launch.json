@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "test:debug",
+      "type": "node",
+      "request": "attach",
+      "protocol": "inspector",
+      "port": 9229,
+      "stopOnEntry": false,
+      "cwd": "${workspaceFolder}",
+      "sourceMaps": true,
+      "outFiles": []
+    }
+  ]
+}

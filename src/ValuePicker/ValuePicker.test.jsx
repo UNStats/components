@@ -1,174 +1,172 @@
 import React from "react";
-import { mount } from "enzyme";
+import { render, Simulate } from "react-testing-library";
+import "dom-testing-library/extend-expect";
 import ValuePicker from "./ValuePicker";
 
 describe("ValuePicker", () => {
   test("non-empty selectable and non-empty selected", () => {
-    const props = {
-      title: "Age",
-      selectable: [
-        { key: "red", value: "Red" },
-        { key: "yellow", value: "Yellow" }
-      ],
-      selected: [
-        { key: "blue", value: "Blue" },
-        { key: "green", value: "Green" },
-        { key: "black", value: "Black" }
-      ],
-      onAddValue: jest.fn(),
-      onRemoveValue: jest.fn()
-    };
-    const wrapper = mount(<ValuePicker {...props} />);
-    const select = wrapper.find("select");
-    expect(select.length).toEqual(1);
-    expect(select.children().length).toEqual(3);
-    expect(
-      select.contains([
-        <option value="" disabled hidden>
-          Add value...
-        </option>,
-        <option value="red">Red</option>,
-        <option value="yellow">Yellow</option>
-      ])
-    ).toEqual(true);
-    const buttons = wrapper.find("button");
-    expect(buttons.length).toEqual(3);
-    expect(
-      buttons.containsAllMatchingElements([
-        <button value="blue">Blue</button>,
-        <button value="green">Green</button>,
-        <button value="black">Black</button>
-      ])
-    ).toEqual(true);
-  });
+    const { container, getByText } = render(
+      <ValuePicker
+        title="Age"
+        selectable={[
+          { key: "red", value: "Red" },
+          { key: "yellow", value: "Yellow" }
+        ]}
+        selected={[
+          { key: "blue", value: "Blue" },
+          { key: "green", value: "Green" },
+          { key: "black", value: "Black" }
+        ]}
+        onAddValue={jest.fn()}
+        onRemoveValue={jest.fn()}
+      />
+    );
 
-  test("non-empty selectable and selected but disabled", () => {
-    const props = {
-      disabled: true,
-      title: "Age",
-      selectable: [
-        { key: "red", value: "Red" },
-        { key: "yellow", value: "Yellow" }
-      ],
-      selected: [
-        { key: "blue", value: "Blue" },
-        { key: "green", value: "Green" },
-        { key: "black", value: "Black" }
-      ],
-      onAddValue: jest.fn(),
-      onRemoveValue: jest.fn()
-    };
-    const wrapper = mount(<ValuePicker {...props} />);
-    // Verify that disabled flags have been set.
-    const dropdown = wrapper.find("Dropdown");
-    expect(dropdown.props().disabled).toEqual(true);
-    const tags = wrapper.find("Tags");
-    expect(tags.props().disabled).toEqual(true);
+    expect(container.querySelectorAll("select").length).toEqual(1);
+
+    expect(container.querySelectorAll("option").length).toEqual(3);
+
+    const defaultOption = getByText("Add value...");
+    expect(defaultOption).toBeInstanceOf(HTMLOptionElement);
+    expect(defaultOption).toHaveAttribute("disabled");
+    expect(defaultOption).toHaveAttribute("hidden");
+    expect(defaultOption).toHaveAttribute("value", "");
+
+    const redOption = getByText("Red");
+    expect(redOption).toBeInstanceOf(HTMLOptionElement);
+    expect(redOption).toHaveAttribute("value", "red");
+
+    const yellowOption = getByText("Yellow");
+    expect(yellowOption).toBeInstanceOf(HTMLOptionElement);
+    expect(yellowOption).toHaveAttribute("value", "yellow");
+
+    expect(container.querySelectorAll("button").length).toEqual(3);
+
+    const blueButton = getByText("Blue");
+    expect(blueButton).toBeInstanceOf(HTMLButtonElement);
+    expect(blueButton).toHaveAttribute("value", "blue");
+
+    const greenButton = getByText("Green");
+    expect(greenButton).toBeInstanceOf(HTMLButtonElement);
+    expect(greenButton).toHaveAttribute("value", "green");
+
+    const blackButton = getByText("Black");
+    expect(blackButton).toBeInstanceOf(HTMLButtonElement);
+    expect(blackButton).toHaveAttribute("value", "black");
   });
 
   test("non-empty selectable and empty selected", () => {
-    const props = {
-      title: "Age",
-      selectable: [
-        { key: "red", value: "Red" },
-        { key: "yellow", value: "Yellow" }
-      ],
-      selected: [],
-      onAddValue: jest.fn(),
-      onRemoveValue: jest.fn()
-    };
-    const wrapper = mount(<ValuePicker {...props} />);
-    const select = wrapper.find("select");
-    expect(select.children().length).toEqual(3);
-    expect(
-      select.contains([
-        <option value="" disabled hidden>
-          Add value...
-        </option>,
-        <option value="red">Red</option>,
-        <option value="yellow">Yellow</option>
-      ])
-    ).toEqual(true);
-    const buttons = wrapper.find("button");
-    expect(buttons.length).toEqual(0);
+    const { container } = render(
+      <ValuePicker
+        title="Age"
+        selectable={[
+          { key: "red", value: "Red" },
+          { key: "yellow", value: "Yellow" }
+        ]}
+        selected={[]}
+        onAddValue={jest.fn()}
+        onRemoveValue={jest.fn()}
+      />
+    );
+    expect(container.querySelectorAll("option").length).toEqual(3);
+    expect(container.querySelectorAll("button").length).toEqual(0);
   });
 
   test("empty selectable and non-empty selected", () => {
-    const props = {
-      title: "Age",
-      selectable: [],
-      selected: [
-        { key: "blue", value: "Blue" },
-        { key: "green", value: "Green" },
-        { key: "black", value: "Black" }
-      ],
-      onAddValue: jest.fn(),
-      onRemoveValue: jest.fn()
-    };
-    const wrapper = mount(<ValuePicker {...props} />);
-    const select = wrapper.find("select");
-    expect(select.children().length).toEqual(1);
-    expect(
-      select.contains(
-        <option value="" disabled hidden>
-          Add value...
-        </option>
-      )
-    ).toEqual(true);
-    const { value, disabled } = select.props();
-    expect({ value, disabled }).toEqual({ value: "", disabled: true });
-    const buttons = wrapper.find("button");
-    expect(buttons.length).toEqual(3);
-    expect(
-      buttons.containsAllMatchingElements([
-        <button value="blue">Blue</button>,
-        <button value="green">Green</button>,
-        <button value="black">Black</button>
-      ])
-    ).toEqual(true);
+    const { container } = render(
+      <ValuePicker
+        title="Age"
+        selectable={[]}
+        selected={[
+          { key: "blue", value: "Blue" },
+          { key: "green", value: "Green" },
+          { key: "black", value: "Black" }
+        ]}
+        onAddValue={jest.fn()}
+        onRemoveValue={jest.fn()}
+      />
+    );
+
+    const select = container.querySelector("select");
+    expect(select).toHaveAttribute("disabled");
+
+    expect(container.querySelectorAll("option").length).toEqual(1);
+    expect(container.querySelectorAll("button").length).toEqual(3);
+  });
+
+  test("disabled prop", () => {
+    const { container, getByText } = render(
+      <ValuePicker
+        disabled={true}
+        title="Age"
+        selectable={[
+          { key: "red", value: "Red" },
+          { key: "yellow", value: "Yellow" }
+        ]}
+        selected={[
+          { key: "blue", value: "Blue" },
+          { key: "green", value: "Green" },
+          { key: "black", value: "Black" }
+        ]}
+        onAddValue={jest.fn()}
+        onRemoveValue={jest.fn()}
+      />
+    );
+
+    // Verify select is disabled.
+    expect(container.querySelector("select")).toHaveAttribute("disabled");
+
+    // Verify all buttons are disabled.
+    expect(getByText("Blue")).toHaveAttribute("disabled");
+    expect(getByText("Green")).toHaveAttribute("disabled");
+    expect(getByText("Black")).toHaveAttribute("disabled");
   });
 
   test("selecting value from selectable fires onAddValue", () => {
-    const props = {
-      title: "Age",
-      selectable: [
-        { key: "red", value: "Red" },
-        { key: "yellow", value: "Yellow" }
-      ],
-      selected: [
-        { key: "blue", value: "Blue" },
-        { key: "green", value: "Green" },
-        { key: "black", value: "Black" }
-      ],
-      onAddValue: jest.fn(),
-      onRemoveValue: jest.fn()
-    };
-    mount(<ValuePicker {...props} />)
-      .find("select")
-      .simulate("change", { target: { value: "red" } });
-    expect(props.onAddValue).toHaveBeenCalledTimes(1);
-    expect(props.onAddValue).toHaveBeenCalledWith("red");
+    const onAddValue = jest.fn();
+    const { container } = render(
+      <ValuePicker
+        title="Age"
+        selectable={[
+          { key: "red", value: "Red" },
+          { key: "yellow", value: "Yellow" }
+        ]}
+        selected={[
+          { key: "blue", value: "Blue" },
+          { key: "green", value: "Green" },
+          { key: "black", value: "Black" }
+        ]}
+        onAddValue={onAddValue}
+        onRemoveValue={jest.fn()}
+      />
+    );
+    Simulate.change(container.querySelector("select"), {
+      target: { value: "red" }
+    });
+    expect(onAddValue).toHaveBeenCalledTimes(1);
+    expect(onAddValue).toHaveBeenCalledWith("red");
   });
 
   test("clicking button from selected fires onRemoveValue", () => {
-    const props = {
-      title: "Age",
-      selectable: [
-        { key: "red", value: "Red" },
-        { key: "yellow", value: "Yellow" }
-      ],
-      selected: [
-        { key: "blue", value: "Blue" },
-        { key: "green", value: "Green" },
-        { key: "black", value: "Black" }
-      ],
-      onAddValue: jest.fn(),
-      onRemoveValue: jest.fn()
-    };
-    mount(<ValuePicker {...props} />)
-      .find('button[value="blue"]')
-      .simulate("click");
-    expect(props.onRemoveValue).toHaveBeenCalledTimes(1);
-    expect(props.onRemoveValue).toHaveBeenCalledWith("blue");
+    const onRemoveValue = jest.fn();
+    const { container } = render(
+      <ValuePicker
+        title="Age"
+        selectable={[
+          { key: "red", value: "Red" },
+          { key: "yellow", value: "Yellow" }
+        ]}
+        selected={[
+          { key: "blue", value: "Blue" },
+          { key: "green", value: "Green" },
+          { key: "black", value: "Black" }
+        ]}
+        onAddValue={jest.fn()}
+        onRemoveValue={onRemoveValue}
+      />
+    );
+    Simulate.click(container.querySelector('button[value="blue"]'));
+    expect(onRemoveValue).toHaveBeenCalledTimes(1);
+    expect(onRemoveValue).toHaveBeenCalledWith("blue");
   });
 });
