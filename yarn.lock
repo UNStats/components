@@ -2496,10 +2496,12 @@ dom-serializer@0:
     entities "~1.1.1"
 
 dom-testing-library@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/dom-testing-library/-/dom-testing-library-1.0.0.tgz#393fd65712ab3d33fd961163972e2fbeb8c0a7a5"
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/dom-testing-library/-/dom-testing-library-1.4.0.tgz#bd531f1313c0ff7b314a7f42e8ddbdae610cabd8"
   dependencies:
     jest-matcher-utils "^22.4.3"
+    mutationobserver-shim "^0.3.2"
+    pretty-format "^22.4.3"
     wait-for-expect "^0.4.0"
 
 dom-urls@^1.1.0:
@@ -5543,6 +5545,10 @@ multicast-dns@^6.0.1:
     dns-packet "^1.3.1"
     thunky "^1.0.2"
 
+mutationobserver-shim@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/mutationobserver-shim/-/mutationobserver-shim-0.3.2.tgz#f4d5dae7a4971a2207914fb5a90ebd514b65acca"
+
 mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
@@ -6915,8 +6921,8 @@ react-styleguidist@^6.1.0:
     webpack-merge "^4.1.2"
 
 react-testing-library@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-testing-library/-/react-testing-library-2.0.0.tgz#6c6ee82c00a6c6afa7f86ab688064b4eed9f6e4e"
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/react-testing-library/-/react-testing-library-2.1.0.tgz#b87b2c8b35fc786e93cc32f427aeb1f493701d69"
   dependencies:
     dom-testing-library "^1.0.0"
     wait-for-expect "0.4.0"
