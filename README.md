@@ -4,15 +4,15 @@ This library contains [React](https://facebook.github.io/react/) components that
 
 ## Explore
 
-You can explore all components by launching the styleguide:
+You can explore all components by launching the catalog:
 
-    yarn run styleguide
+    yarn start
 
-and open your browser at http://localhost:6060/. You can also explore the styleguide online: https://unstats.github.io/components/.
+and open your browser at [http://localhost:4000/](http://localhost:4000/). You can also explore the catalog online: [https://unstats.github.io/components/](https://unstats.github.io/components/).
 
 ## Installation
 
-This package is currently not published to [NPM](https://www.npmjs.com/). You can install it directly from [GitHub](https://github.com/). Go to the [releases page](https://github.com/UNStats/components/releases) and look up the link to tarball `unstats-component-vX.Y.Z.tgz` of the latest release and run
+This package is currently not being published to [NPM](https://www.npmjs.com/). You can install it directly from [GitHub](https://github.com/). Go to [releases page](https://github.com/UNStats/components/releases) and look up the link to tarball `unstats-component-vX.Y.Z.tgz` of the latest release and run
 
     yarn add <link_to_tarball>
 

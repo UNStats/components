@@ -1,79 +1,114 @@
-Selected value corresponds to option key:
+This component encapsulates `<select>`. It does does not maintain state, i.e. it does not store the selected option. State needs to be managed by a parent component, which can be notified of changes via `onChange` callback.
 
-```jsx
-<Dropdown
-  options={[
-    { key: "red", value: "Red" },
-    { key: "green", value: "Green" },
-    { key: "blue", value: "Blue" }
-  ]}
-  value="blue"
-  onChange={payload => console.log(`onChange: ${payload}`)}
-/>
+## Selected value is valid option key
+
+Render with `value` being a `key` from the `options` array.
+
+```react
+showSource: true
+---
+<Provider>
+  <Dropdown
+    options={[
+      { key: "red", value: "Red" },
+      { key: "green", value: "Green" },
+      { key: "blue", value: "Blue" }
+    ]}
+    value="blue"
+    onChange={value => alert(`onChange: ${value}`)}
+  />
+</Provider>
 ```
 
-Selected value does not correspond to option key:
+## Selected value is invalid option key
 
-```jsx
-<Dropdown
-  options={[
-    { key: "red", value: "Red" },
-    { key: "green", value: "Green" },
-    { key: "blue", value: "Blue" }
-  ]}
-  value="black"
-  onChange={payload => console.log(`onChange: ${payload}`)}
-/>
+Render with `value` provided, but not a valid `key` from `options`.
+
+```react
+showSource: true
+---
+<Provider>
+  <Dropdown
+    options={[
+      { key: "red", value: "Red" },
+      { key: "green", value: "Green" },
+      { key: "blue", value: "Blue" }
+    ]}
+    value="black"
+    onChange={value => alert(`onChange: ${value}`)}
+  />
+</Provider>
 ```
 
-No selected value:
+## No value selected
 
-```jsx
-<Dropdown
-  options={[
-    { key: "red", value: "Red" },
-    { key: "green", value: "Green" },
-    { key: "blue", value: "Blue" }
-  ]}
-  onChange={payload => console.log(`onChange: ${payload}`)}
-/>
+Render without providing `value`.
+
+```react
+showSource: true
+---
+<Provider>
+  <Dropdown
+    options={[
+      { key: "red", value: "Red" },
+      { key: "green", value: "Green" },
+      { key: "blue", value: "Blue" }
+    ]}
+    onChange={value => alert(`onChange: ${value}`)}
+  />
+</Provider>
 ```
 
-Empty options:
+## No options
 
-```jsx
-<Dropdown
-  options={[]}
-  onChange={payload => console.log(`onChange: ${payload}`)}
-/>
+Render with empty `options` array. You cannot omit `options` because it is a required prop.
+
+```react
+showSource: true
+---
+<Provider>
+  <Dropdown options={[]} onChange={value => alert(`onChange: ${value}`)} />
+</Provider>
 ```
 
-Custom placeholder:
+## Custom placeholder
 
-```jsx
-<Dropdown
-  options={[
-    { key: "red", value: "Red" },
-    { key: "green", value: "Green" },
-    { key: "blue", value: "Blue" }
-  ]}
-  value="black"
-  placeholder="Make your selection..."
-  onChange={payload => console.log(`onChange: ${payload}`)}
-/>
+You can provide a custom placeholder with the `placeholder` prop.
+
+```react
+showSource: true
+---
+<Provider>
+  <Dropdown
+    options={[
+      { key: "red", value: "Red" },
+      { key: "green", value: "Green" },
+      { key: "blue", value: "Blue" }
+    ]}
+    value="black"
+    placeholder="Make your selection..."
+    onChange={value => alert(`onChange: ${value}`)}
+  />
+</Provider>
 ```
 
-Disabled:
+## Disabled
 
-```jsx
-<Dropdown
-  options={[
-    { key: "red", value: "Red" },
-    { key: "green", value: "Green" },
-    { key: "blue", value: "Blue" }
-  ]}
-  value="blue"
-  onChange={payload => console.log(`onChange: ${payload}`)}
-  disabled
-/>
+You can disable the component with the `disabled` flag.
+
+```react
+showSource: true
+---
+<Provider>
+  <Dropdown
+    options={[
+      { key: "red", value: "Red" },
+      { key: "green", value: "Green" },
+      { key: "blue", value: "Blue" }
+    ]}
+    value="blue"
+    onChange={value => alert(`onChange: ${value}`)}
+    disabled
+  />
+</Provider>
 ```

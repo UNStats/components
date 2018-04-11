@@ -9,8 +9,8 @@
 # production
 /dist
 
-# styleguide
-/styleguide
+# catalog
+/catalog/build
 
 # misc
 .DS_Store

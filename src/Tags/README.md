@@ -1,36 +1,56 @@
-Non-empty tags:
+This component renders an array of tags. It does not maintain state. State needs to be managed by a parent component, which can be notified of changes via `onClick` callback.
 
-```jsx
-<Tags
-  tags={[
-    { key: "red", value: "Red" },
-    { key: "green", value: "Green" },
-    { key: "blue", value: "Blue" },
-    { key: "yellow", value: "Yellow" },
-    { key: "orange", value: "Orange" }
-  ]}
-  onClick={payload => console.log(`onClick: ${payload}`)}
-/>
+## Non-empty tags
+
+Render with non-empty tags.
+
+```react
+showSource: true
+---
+<Provider>
+  <Tags
+    tags={[
+      { key: "red", value: "Red" },
+      { key: "green", value: "Green" },
+      { key: "blue", value: "Blue" },
+      { key: "yellow", value: "Yellow" },
+      { key: "orange", value: "Orange" }
+    ]}
+    onClick={value => alert(`onClick: ${value}`)}
+  />
+</Provider>
 ```
 
-Disabled:
+## Empty tags
 
-```jsx
-<Tags
-  tags={[
-    { key: "red", value: "Red" },
-    { key: "green", value: "Green" },
-    { key: "blue", value: "Blue" },
-    { key: "yellow", value: "Yellow" },
-    { key: "orange", value: "Orange" }
-  ]}
-  disabled={true}
-  onClick={payload => console.log(`onClick: ${payload}`)}
-/>
+Render with empty `tags` array. You cannot omit `tags` because it is a required prop.
+
+```react
+showSource: true
+---
+<Provider>
+  <Tags tags={[]} onClick={value => alert(`onClick: ${value}`)} />
+</Provider>
 ```
 
-Empty tags:
+## Disabled
 
-```jsx
-<Tags tags={[]} onClick={payload => console.log(`onClick: ${payload}`)} />
+You can disable the component with the `disabled` flag.
+
+```react
+showSource: true
+---
+<Provider>
+  <Tags
+    tags={[
+      { key: "red", value: "Red" },
+      { key: "green", value: "Green" },
+      { key: "blue", value: "Blue" },
+      { key: "yellow", value: "Yellow" },
+      { key: "orange", value: "Orange" }
+    ]}
+    disabled
+    onClick={value => alert(`onClick: ${value}`)}
+  />
+</Provider>
 ```
